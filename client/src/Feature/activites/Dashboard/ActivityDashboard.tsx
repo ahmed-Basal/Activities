@@ -15,6 +15,8 @@ type Props = {
     editMode: boolean;
     submitForm: (data: ActivityFormData) => void;
     deleteActivity: (id: string) => void;
+    deletePending?: boolean;
+    targetId?: string;
 }
 
 export default function ActivityDashboard({
@@ -26,7 +28,9 @@ export default function ActivityDashboard({
     closeForm,
     editMode,
     submitForm,
-    deleteActivity
+    deleteActivity,
+    deletePending,
+    targetId
 }: Props) {
     return (
         <Grid2 container spacing={2}>
@@ -35,6 +39,8 @@ export default function ActivityDashboard({
                     activities={activities}
                     selectActivity={selectActivity}
                     deleteActivity={deleteActivity}
+                    deletePending={deletePending}
+                    targetId={targetId}
                 />
             </Grid2>
             <Grid2 size={5}>

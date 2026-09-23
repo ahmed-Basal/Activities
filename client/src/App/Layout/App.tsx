@@ -11,7 +11,7 @@ import useactivites from '../../lib/Hooks/useactivites';
 function App() {
   const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined)
   const [editMode, setEditMode] = useState(false)
-  const { activities, isPending } = useactivites()
+  const { activities, isPending, deleteActivity } = useactivites()
  
 
   const handleSelectActivity = (id: string) => {
@@ -36,7 +36,13 @@ function App() {
   }
 
   const handleDeleteActivity = (id: string) => {
-    console.log('delete activity',id);
+    deleteActivity.mutate(id, {
+      onSuccess: () => {
+        if (selectedActivity?.id === id) {
+          setSelectedActivity(undefined)
+        }
+      }
+    })
   }
 
   return (
@@ -60,6 +66,8 @@ function App() {
         closeForm={handleCloseForm}
         submitForm={handleSubmitForm}
         deleteActivity={handleDeleteActivity}
+        deletePending={deleteActivity.isPending}
+        targetId={deleteActivity.variables}
       />
       ) 
         }
