@@ -8,7 +8,11 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Group from '@mui/icons-material/Group';
 
-export default function NavBar() {
+type Props = {
+  openForm?: () => void;
+};
+
+export default function NavBar({ openForm }: Props) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -63,6 +67,7 @@ export default function NavBar() {
             </Box>
 
             <Button
+              onClick={openForm}
               size="large"
               variant="contained"
               color="warning"
