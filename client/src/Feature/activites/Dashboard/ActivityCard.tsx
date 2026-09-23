@@ -6,11 +6,19 @@ type Props = {
     selectActivity: (id: string) => void;
     deleteActivity: (id: string) => void;
     deletePending?: boolean;
+    isSelected?: boolean;
 }
 
-export default function ActivityCard({ activity, selectActivity, deleteActivity, deletePending }: Props) {
+export default function ActivityCard({ activity, selectActivity, deleteActivity, deletePending, isSelected }: Props) {
     return (
-        <Card sx={{ borderRadius: 3 }}>
+        <Card 
+            sx={{ 
+                borderRadius: 3,
+                border: isSelected ? '2px solid #1976d2' : '1px solid #e0e0e0',
+                boxShadow: isSelected ? '0 6px 20px rgba(25, 118, 210, 0.25)' : '0 2px 8px rgba(0,0,0,0.05)',
+                transition: 'all 0.2s ease-in-out'
+            }}
+        >
             <CardContent>
                 <Typography variant="h5">{activity.title}</Typography>
                 <Typography sx={{ color: 'text.secondary', mb: 1 }}>{activity.date}</Typography>
@@ -23,7 +31,7 @@ export default function ActivityCard({ activity, selectActivity, deleteActivity,
                     <Button 
                         onClick={() => selectActivity(activity.id)} 
                         size="medium" 
-                        variant="contained"
+                        variant={isSelected ? "contained" : "outlined"}
                     >
                         View
                     </Button>

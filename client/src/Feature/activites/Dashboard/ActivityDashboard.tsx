@@ -17,6 +17,7 @@ type Props = {
     deleteActivity: (id: string) => void;
     deletePending?: boolean;
     targetId?: string;
+    isSubmitting?: boolean;
 }
 
 export default function ActivityDashboard({
@@ -30,7 +31,8 @@ export default function ActivityDashboard({
     submitForm,
     deleteActivity,
     deletePending,
-    targetId
+    targetId,
+    isSubmitting
 }: Props) {
     return (
         <Grid2 container spacing={2}>
@@ -41,6 +43,7 @@ export default function ActivityDashboard({
                     deleteActivity={deleteActivity}
                     deletePending={deletePending}
                     targetId={targetId}
+                    selectedActivityId={selectedActivity?.id}
                 />
             </Grid2>
             <Grid2 size={5}>
@@ -53,9 +56,11 @@ export default function ActivityDashboard({
                 )}
                 {editMode && (
                     <ActivityForm
+                        key={selectedActivity?.id || 'create'}
                         activity={selectedActivity}
                         closeForm={closeForm}
                         onSubmit={submitForm}
+                        isSubmitting={isSubmitting}
                     />
                 )}
             </Grid2>

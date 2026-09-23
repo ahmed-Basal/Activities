@@ -1,4 +1,9 @@
-import { Box, Button, MenuItem, Paper, Typography } from '@mui/material';
+import { useEffect } from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { activitySchema, CATEGORY_OPTIONS, type ActivityFormData, type Category } from '../../../lib/schemas/activitySchema';
@@ -7,16 +12,16 @@ import type { Activity } from '../../../lib/Types';
 
 type Props = {
   activity?: Activity;
-  onSubmit: (data: ActivityFormData) => void;
   closeForm: () => void;
+  onSubmit: (data: ActivityFormData) => void;
+  isSubmitting?: boolean;
 };
 
-export default function ActivityForm({ activity, onSubmit, closeForm }: Props) {
-  // Check if initial category is one of the valid enum options, otherwise default to 'drinks' or empty
+export default function ActivityForm({ activity, closeForm, onSubmit, isSubmitting }: Props) {
   const isValidCategory = (cat?: string): cat is Category =>
     CATEGORY_OPTIONS.includes(cat as Category);
 
-  const { control, handleSubmit } = useForm<ActivityFormData>({
+  const { control, handleSubmit, reset } = useForm<ActivityFormData>({
     resolver: zodResolver(activitySchema),
     defaultValues: {
       title: activity?.title ?? '',
@@ -27,6 +32,29 @@ export default function ActivityForm({ activity, onSubmit, closeForm }: Props) {
       venue: activity?.venue ?? '',
     },
   });
+
+  // Reactive synchronization: resets form whenever activity prop changes
+  useEffect(() => {
+    if (activity) {
+      reset({
+        title: activity.title,
+        description: activity.description,
+        category: isValidCategory(activity.category) ? activity.category : 'drinks',
+        date: activity.date ? activity.date.split('T')[0] : '',
+        city: activity.city,
+        venue: activity.venue,
+      });
+    } else {
+      reset({
+        title: '',
+        description: '',
+        category: 'drinks',
+        date: '',
+        city: '',
+        venue: '',
+      });
+    }
+  }, [activity, reset]);
 
   return (
     <Paper sx={{ borderRadius: 3, p: 3, boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)' }}>
@@ -76,10 +104,16 @@ export default function ActivityForm({ activity, onSubmit, closeForm }: Props) {
         <CustomTextInput name="venue" control={control} label="Venue" placeholder="Venue" />
 
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1.5, mt: 1 }}>
-          <Button onClick={closeForm} color="inherit">
+          <Button onClick={closeForm} color="inherit" disabled={isSubmitting}>
             Cancel
           </Button>
-          <Button type="submit" variant="contained" color="success">
+          <Button 
+            type="submit" 
+            variant="contained" 
+            color="success" 
+            loading={isSubmitting}
+            disabled={isSubmitting}
+          >
             Submit
           </Button>
         </Box>
