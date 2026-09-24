@@ -2,17 +2,14 @@ import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Group from '@mui/icons-material/Group';
+import { NavLink } from 'react-router';
+import MenuitemLink from '../Shared/Compenet/MenuitemLink';
 
-type Props = {
-  openForm?: () => void;
-};
-
-export default function NavBar({ openForm }: Props) {
+export default function NavBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -25,9 +22,9 @@ export default function NavBar({ openForm }: Props) {
           <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Box>
               <MenuList sx={{ display: 'flex', p: 0 }}>
-                <MenuItem sx={{ display: 'flex', gap: 2 }}>
+                <MenuItem component={NavLink} to="/" sx={{ display: 'flex', gap: 2 }}>
                   <Group fontSize="large" />
-                  <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
+                  <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
                     Reactivities
                   </Typography>
                 </MenuItem>
@@ -36,45 +33,18 @@ export default function NavBar({ openForm }: Props) {
 
             <Box sx={{ display: 'flex' }}>
               <MenuList sx={{ display: 'flex', flexDirection: 'row', p: 0 }}>
-                <MenuItem
-                  sx={{
-                    fontSize: '1.2rem',
-                    textTransform: 'uppercase',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  Activities
-                </MenuItem>
-                <MenuItem
-                  sx={{
-                    fontSize: '1.2rem',
-                    textTransform: 'uppercase',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  About
-                </MenuItem>
-                <MenuItem
-                  sx={{
-                    fontSize: '1.2rem',
-                    textTransform: 'uppercase',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  Contact
-                </MenuItem>
+                <MenuitemLink to="/activities">Activities</MenuitemLink>
+                <MenuitemLink to="/createActivity">Create Activity</MenuitemLink>
               </MenuList>
             </Box>
 
-            <Button
-              onClick={openForm}
-              size="large"
-              variant="contained"
-              color="warning"
-              sx={{ fontWeight: 'bold' }}
-            >
-              Create Activity
-            </Button>
+            <Box>
+              <MenuList sx={{ display: 'flex', p: 0 }}>
+                <MenuItem sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+                  User menu
+                </MenuItem>
+              </MenuList>
+            </Box>
           </Toolbar>
         </Container>
       </AppBar>

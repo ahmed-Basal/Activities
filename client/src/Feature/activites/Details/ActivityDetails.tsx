@@ -3,18 +3,20 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import type { Activity } from "../../../lib/Types";
 import CardMedia from '@mui/material/CardMedia';
+import {Link} from 'react-router';
+import { useNavigate } from 'react-router';
+import useactivites from '../../../lib/Hooks/useactivites';
+import { useParams } from 'react-router';
+export default function ActivityDetails() {
+    
 
-type Props = {
-    activity: Activity;
-    cancelSelectActivity: () => void;
-    openForm?: (id: string) => void;
-}
+   const navigate=useNavigate();
+   const{id}=useParams();
+   const {activity, isLoadingActivity}=useactivites(id);
 
-export default function ActivityDetails({ activity, cancelSelectActivity, openForm }: Props) {
-    if (!activity) return null;
-
+    if(isLoadingActivity) return <Typography variant="h5">Loading...</Typography>
+    if(!activity) return <Typography variant="h5">Activity not found</Typography>
     return (
         <Card sx={{ borderRadius: 3 }}>
             <CardMedia
@@ -29,16 +31,10 @@ export default function ActivityDetails({ activity, cancelSelectActivity, openFo
                 <Typography variant="subtitle1">{activity.city} / {activity.venue}</Typography>
             </CardContent>
             <CardActions sx={{ display: 'flex', justifyContent: 'space-between', pb: 2 }}>
-                <Button onClick={() => openForm?.(activity.id)} color="primary" size="medium" variant="contained">Edit</Button>
-                <Button 
-                    onClick={cancelSelectActivity} 
-                    color="inherit" 
-                    size="medium" 
-                    variant="contained"
-                >
-                    Cancel
-                </Button>
-            </CardActions>
+             <Button component={Link} to={`/manage/${activity.id}`}  color="primary" >Edit</Button>
+             <Button variant="contained" color="secondary" onClick={() => navigate(`/activities`)}>Cancel</Button>
+             
+             </CardActions>
         </Card>
     );
 }

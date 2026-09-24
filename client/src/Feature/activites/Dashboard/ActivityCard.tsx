@@ -1,24 +1,24 @@
-import { Box, Button, Card, CardActions, CardContent, Chip, Typography } from "@mui/material";
-import type { Activity } from "../../../lib/Types";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Chip from '@mui/material/Chip';
+import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router';
+import type { Activity } from '../../../lib/Types';
+import useactivites from '../../../lib/Hooks/useactivites';
 
 type Props = {
     activity: Activity;
-    selectActivity: (id: string) => void;
-    deleteActivity: (id: string) => void;
-    deletePending?: boolean;
-    isSelected?: boolean;
-}
+};
 
-export default function ActivityCard({ activity, selectActivity, deleteActivity, deletePending, isSelected }: Props) {
+export default function ActivityCard({ activity }: Props) {
+    const { deleteActivity } = useactivites();
+    const navigate = useNavigate();
+
     return (
-        <Card 
-            sx={{ 
-                borderRadius: 3,
-                border: isSelected ? '2px solid #1976d2' : '1px solid #e0e0e0',
-                boxShadow: isSelected ? '0 6px 20px rgba(25, 118, 210, 0.25)' : '0 2px 8px rgba(0,0,0,0.05)',
-                transition: 'all 0.2s ease-in-out'
-            }}
-        >
+        <Card sx={{ borderRadius: 3 }}>
             <CardContent>
                 <Typography variant="h5">{activity.title}</Typography>
                 <Typography sx={{ color: 'text.secondary', mb: 1 }}>{activity.date}</Typography>
@@ -28,20 +28,17 @@ export default function ActivityCard({ activity, selectActivity, deleteActivity,
             <CardActions sx={{ display: 'flex', justifyContent: 'space-between', pb: 2 }}>
                 <Chip label={activity.category} variant="outlined" />
                 <Box sx={{ display: 'flex', gap: 1 }}>
-                    <Button 
-                        onClick={() => selectActivity(activity.id)} 
-                        size="medium" 
-                        variant={isSelected ? "contained" : "outlined"}
-                    >
+                    <Button onClick={() => navigate(`/activities/${activity.id}`)}>
+                      
                         View
                     </Button>
-                    <Button 
-                        onClick={() => deleteActivity(activity.id)} 
-                        color="error" 
-                        size="medium" 
+                    <Button
+                        onClick={() => deleteActivity.mutate(activity.id)}
+                        color="error"
+                        size="medium"
                         variant="contained"
-                        loading={deletePending}
-                        disabled={deletePending}
+                        loading={deleteActivity.isPending && deleteActivity.variables === activity.id}
+                        disabled={deleteActivity.isPending}
                     >
                         Delete
                     </Button>
