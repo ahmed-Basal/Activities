@@ -1,13 +1,51 @@
-import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Group from '@mui/icons-material/Group';
+import { Link } from 'react-router';
 
 export default function Homepage() {
     return (
-        <Container sx={{ mt: 3 }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, alignItems: 'flex-start' }}>
-                <Typography variant="h4">Home Page</Typography>
+        <Paper
+            sx={{
+                color: 'white',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 6,
+                alignItems: 'center',
+                alignContent: 'center',
+                justifyContent: 'center',
+                height: '100vh',
+                backgroundImage: 'linear-gradient(135deg, #182a73 0%, #218aae 69%, #20a7ac 89%)'
+            }}
+        >
+            <Box
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    alignContent: 'center',
+                    color: 'white',
+                    gap: 3
+                }}
+            >
+                <Group sx={{ height: 110, width: 110 }} />
+                <Typography variant="h1">
+                    Reactivities
+                </Typography>
             </Box>
-        </Container>
+            <Typography variant="h2">
+                Welcome to reactivities
+            </Typography>
+            <Button
+                component={Link}
+                to="/activities"
+                size="large"
+                variant="contained"
+                sx={{ height: 80, borderRadius: 4, fontSize: '1.5rem' }}
+            >
+                Take me to the activities!
+            </Button>
+        </Paper>
     );
 }

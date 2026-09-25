@@ -1,3 +1,10 @@
 body {
   background-color: #eaeaea;
 }
+
+.react-calendar{
+  width:100% !important;
+  border:none  !important;
+  
+   
+}

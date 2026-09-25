@@ -27,6 +27,7 @@ import type { Activity } from "../Types";
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['activities'] });
+            queryClient.invalidateQueries({ queryKey: ['selectedActivity'] });
         }
     });
 

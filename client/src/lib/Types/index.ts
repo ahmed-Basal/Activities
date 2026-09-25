@@ -10,4 +10,5 @@ export interface Activity {
     venue: string;
     latitude: number;
     longitude: number;
+    isCancelled: boolean;
 }
