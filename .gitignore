@@ -3,6 +3,33 @@
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+
+# .NET Launch Settings & Local Configurations
+**/launchSettings.json
+**/appsettings.Development.json
+
+## Node / React
+**/node_modules/
+**/dist/
+**/dist-ssr/
+*.local
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Logs & Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
 
 # Visual Studio / VS Code
 .vscode/*
@@ -10,12 +37,6 @@
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
-
-# Rider / JetBrains
 .idea/
 
 # OS Files
