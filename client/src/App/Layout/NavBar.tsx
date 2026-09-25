@@ -19,12 +19,21 @@ export default function NavBar() {
         }}
       >
         <Container maxWidth="xl">
-          <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Toolbar
+            sx={{
+              display: 'flex',
+              flexDirection: { xs: 'column', md: 'row' },
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: { xs: 1, md: 2 },
+              py: { xs: 1.5, md: 0.5 },
+            }}
+          >
             <Box>
               <MenuList sx={{ display: 'flex', p: 0 }}>
-                <MenuItem component={NavLink} to="/" sx={{ display: 'flex', gap: 2 }}>
-                  <Group fontSize="large" />
-                  <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+                <MenuItem component={NavLink} to="/" sx={{ display: 'flex', gap: 1.5, px: 2 }}>
+                  <Group sx={{ fontSize: { xs: 30, sm: 35 } }} />
+                  <Typography variant="h4" sx={{ fontWeight: 'bold', fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2.125rem' } }}>
                     Reactivities
                   </Typography>
                 </MenuItem>
@@ -32,7 +41,15 @@ export default function NavBar() {
             </Box>
 
             <Box sx={{ display: 'flex' }}>
-              <MenuList sx={{ display: 'flex', flexDirection: 'row', p: 0 }}>
+              <MenuList
+                sx={{
+                  display: 'flex',
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  alignItems: 'center',
+                  p: 0,
+                  gap: { xs: 0.5, sm: 1 },
+                }}
+              >
                 <MenuitemLink to="/activities">Activities</MenuitemLink>
                 <MenuitemLink to="/createActivity">Create Activity</MenuitemLink>
               </MenuList>
@@ -40,7 +57,7 @@ export default function NavBar() {
 
             <Box>
               <MenuList sx={{ display: 'flex', p: 0 }}>
-                <MenuItem sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+                <MenuItem sx={{ fontSize: { xs: '1rem', sm: '1.2rem' }, fontWeight: 'bold', px: 2 }}>
                   User menu
                 </MenuItem>
               </MenuList>

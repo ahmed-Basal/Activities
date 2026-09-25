@@ -45,7 +45,7 @@ export default function ActivityCard({ activity }: Props) {
                 </Box>
             </Box>
             <CardContent sx={{ p: 0 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 2, px: 2 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: { xs: 1.5, sm: 3 }, mb: 2, px: 2 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <AccessTime sx={{ mr: 1, fontSize: 20, color: 'text.secondary' }} />
                         <Typography variant="body2" color="text.secondary" noWrap>

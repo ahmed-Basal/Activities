@@ -16,17 +16,15 @@ export default function ActivityDetails() {
     if (!activity) return <Typography variant="h5">Activity not found</Typography>;
     return (
       <Grid2 container spacing={3}>
-       <Grid2 size={8}>
+       <Grid2 size={{ xs: 12, md: 8 }}>
            <ActivityDetailsheader activity={activity}/>
            <ActivityDetailsInfo activity={activity}/>
            <ActivityDetailsChats/>
-           
+       </Grid2>
 
-      </Grid2>
-
-      <Grid2 size={4}>
-      <ActivityDetailsSideBar/>
-      </Grid2>
+       <Grid2 size={{ xs: 12, md: 4 }}>
+         <ActivityDetailsSideBar/>
+       </Grid2>
       </Grid2>
     );
 }

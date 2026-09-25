@@ -32,7 +32,7 @@ export default function ActivityDetailsHeader({activity}: Props) {
         )}
         <CardMedia
             component="img"
-            height="300"
+            sx={{ height: { xs: 260, sm: 300, md: 350 }, objectFit: 'cover' }}
             image={`/images/categoryImages/${activity?.category || 'travel'}.jpg`}
             alt={`${activity?.category || 'activity'}.jpg`}
         />
@@ -41,17 +41,18 @@ export default function ActivityDetailsHeader({activity}: Props) {
             bottom: 0,
             width: '100%',
             color: 'white',
-            padding: 2,
+            padding: { xs: 2, sm: 2.5 },
             display: 'flex',
-            flexDirection: 'row',
+            flexDirection: { xs: 'column', sm: 'row' },
             justifyContent: 'space-between',
-            alignItems: 'flex-end',
-            background: 'linear-gradient(to top, rgba(0, 0, 0, 1.0), transparent)',
+            alignItems: { xs: 'flex-start', sm: 'flex-end' },
+            gap: 2,
+            background: 'linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent)',
             boxSizing: 'border-box',
         }}>
             {/* Text Section */}
             <Box>
-                <Typography variant="h4" sx={{ fontWeight: 'bold' }}>{activity?.title}</Typography>
+                <Typography variant="h4" sx={{ fontWeight: 'bold', fontSize: { xs: '1.4rem', sm: '2rem' } }}>{activity?.title}</Typography>
                 <Typography variant="subtitle1">{formatDate(activity?.date)}</Typography>
                 <Typography variant="subtitle2">
                     Hosted by <Link to={`/profiles/username`} style={{ color: 'white', fontWeight: 'bold' }}>Bob</Link>
@@ -59,7 +60,7 @@ export default function ActivityDetailsHeader({activity}: Props) {
             </Box>
 
             {/* Buttons aligned to the right */}
-            <Box sx={{ display: 'flex', gap: 2 }}>
+            <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap', width: { xs: '100%', sm: 'auto' } }}>
                 {isHost ? (
                     <>
                         <Button
