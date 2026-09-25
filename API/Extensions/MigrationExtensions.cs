@@ -12,7 +12,7 @@ public static class MigrationExtensions
 
         try
         {
-            var context = services.GetRequiredService<AppDbContext>();
+            var context = services.GetRequiredService<DevMeetDbContext>();
             await context.Database.MigrateAsync();
             await DbInitializer.SeedData(context);
         }

@@ -32,11 +32,12 @@ public static class ApplicationServiceExtensions
             .ValidateOnStart();
 
         // DbContext with PostgreSQL
-        services.AddDbContext<AppDbContext>((serviceProvider, options) =>
+        services.AddDbContext<DevMeetDbContext>((serviceProvider, options) =>
         {
             var dbOptions = serviceProvider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
             options.UseNpgsql(dbOptions.DefaultConnection);
         });
+        services.AddScoped<AppDbContext>(sp => (AppDbContext)sp.GetRequiredService<DevMeetDbContext>());
 
         // CORS Policy
         services.AddCors(opt =>

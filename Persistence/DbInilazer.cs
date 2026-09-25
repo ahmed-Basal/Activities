@@ -4,117 +4,108 @@ namespace Persistence;
 
 public static class DbInitializer
 {
-    public static async Task SeedData(AppDbContext context)
+    public static async Task SeedData(DevMeetDbContext context)
     {
+        // If old sample data from London/Paris exists, replace it with Egyptian data
+        if (context.Activities.Any(a => a.City == "London" || a.City == "Paris"))
+        {
+            context.Activities.RemoveRange(context.Activities);
+            await context.SaveChangesAsync();
+        }
+
         if (context.Activities.Any()) return;
 
         var activities = new List<Activity>
         {
             new() {
-                Title = "Past Activity 1",
-                Date = DateTime.UtcNow.AddMonths(-2),
-                Description = "Activity 2 months ago",
-                Category = "drinks",
-                City = "London",
-                Venue = "The Lamb and Flag, 33, Rose Street, Seven Dials, Covent Garden, London, Greater London, England, WC2E 9EB, United Kingdom",
-                Latitude = 51.51171665,
-                Longitude = -0.1256611057818921,
-            },
-            new() {
-                Title = "Past Activity 2",
+                Title = "Cairo .NET & React Summit",
                 Date = DateTime.UtcNow.AddMonths(-1),
-                Description = "Activity 1 month ago",
+                Description = "Annual gathering of Egyptian software engineers at The Greek Campus discussing .NET 9, Cloud-Native architecture, and React 19 performance.",
                 Category = "culture",
-                City = "Paris",
-                Venue = "Louvre Museum, Rue Saint-Honoré, Quartier du Palais Royal, 1st Arrondissement, Paris, Ile-de-France, Metropolitan France, 75001, France",
-                Latitude = 48.8611473,
-                Longitude = 2.33802768704666
+                City = "Cairo",
+                Venue = "The Greek Campus, Downtown Cairo",
+                Latitude = 30.0444,
+                Longitude = 31.2357,
             },
             new() {
-                Title = "Future Activity 1",
-                Date = DateTime.UtcNow.AddMonths(1),
-                Description = "Activity 1 month in future",
-                Category = "culture",
-                City = "London",
-                Venue = "Natural History Museum",
-                Latitude = 51.496510900000004,
-                Longitude = -0.17600190725447445
-            },
-            new() {
-                Title = "Future Activity 2",
-                Date = DateTime.UtcNow.AddMonths(2),
-                Description = "Activity 2 months in future",
-                Category = "music",
-                City = "London",
-                Venue = "The O2",
-                Latitude = 51.502936649999995,
-                Longitude = 0.0032029278126681844
-            },
-            new()
-            {
-                Title = "Future Activity 3",
-                Date = DateTime.UtcNow.AddMonths(3),
-                Description = "Activity 3 months in future",
-                Category = "drinks",
-                City = "London",
-                Venue = "The Mayflower",
-                Latitude = 51.501778,
-                Longitude = -0.053577
-            },
-            new()
-            {
-                Title = "Future Activity 4",
-                Date = DateTime.UtcNow.AddMonths(4),
-                Description = "Activity 4 months in future",
-                Category = "drinks",
-                City = "London",
-                Venue = "The Blackfriar",
-                Latitude = 51.512146650000005,
-                Longitude = -0.10364680647106028
-            },
-            new()
-            {
-                Title = "Future Activity 5",
-                Date = DateTime.UtcNow.AddMonths(5),
-                Description = "Activity 5 months in future",
-                Category = "culture",
-                City = "London",
-                Venue = "Sherlock Holmes Museum, 221b, Baker Street, Marylebone, London, Greater London, England, NW1 6XE, United Kingdom",
-                Latitude = 51.5237629,
-                Longitude = -0.1584743
-            },
-            new()
-            {
-                Title = "Future Activity 6",
-                Date = DateTime.UtcNow.AddMonths(6),
-                Description = "Activity 6 months in future",
-                Category = "music",
-                City = "London",
-                Venue = "Roundhouse, Chalk Farm Road, Maitland Park, Chalk Farm, London Borough of Camden, London, Greater London, England, NW1 8EH, United Kingdom",
-                Latitude = 51.5432505,
-                Longitude = -0.15197608174931165
-            },
-            new()
-            {
-                Title = "Future Activity 7",
-                Date = DateTime.UtcNow.AddMonths(7),
-                Description = "Activity 2 months ago",
+                Title = "Alexandria Coastal Tech Talk",
+                Date = DateTime.UtcNow.AddDays(-12),
+                Description = "Weekend developer meetup by the Mediterranean Sea discussing AI integration and web engineering at the Library of Alexandria.",
                 Category = "travel",
-                City = "London",
-                Venue = "River Thames, England, United Kingdom",
-                Latitude = 51.5575525,
-                Longitude = -0.781404
+                City = "Alexandria",
+                Venue = "Bibliotheca Alexandrina Conference Hall, Al Shatby",
+                Latitude = 31.2089,
+                Longitude = 29.9092,
             },
-            new()
-            {
-                Title = "Future Activity 8",
-                Date = DateTime.UtcNow.AddMonths(8),
-                Description = "Activity 8 months in future",
+            new() {
+                Title = "Maadi Specialty Coffee & Code",
+                Date = DateTime.UtcNow.AddDays(3),
+                Description = "Casual Saturday morning coffee session on Road 9 for developers to review open-source projects, network, and exchange career tips.",
+                Category = "drinks",
+                City = "Cairo",
+                Venue = "Road 9 Specialty Cafe, Maadi",
+                Latitude = 29.9585,
+                Longitude = 31.2778,
+            },
+            new() {
+                Title = "Giza Pyramids Sound & Light Cultural Evening",
+                Date = DateTime.UtcNow.AddDays(10),
+                Description = "Night gathering exploring ancient Egyptian civilization and history through the iconic Sound and Light performance at the Pyramids Plateau.",
+                Category = "culture",
+                City = "Giza",
+                Venue = "Pyramids Plateau, Giza",
+                Latitude = 29.9792,
+                Longitude = 31.1342,
+            },
+            new() {
+                Title = "Zamalek Indie Film Screening",
+                Date = DateTime.UtcNow.AddDays(18),
+                Description = "Screening of award-winning contemporary Egyptian short movies followed by an open panel discussion with independent filmmakers.",
                 Category = "film",
-                City = "London",
-                Venue = "River Thames, England, United Kingdom",
-                Latitude = 51.5575525,
-                Longitude = -0.781404
+                City = "Cairo",
+                Venue = "Zawya Cinema, Downtown / Zamalek Arts Center",
+                Latitude = 30.0617,
+                Longitude = 31.2198,
+            },
+            new() {
+                Title = "Old Cairo Street Food & Heritage Walk",
+                Date = DateTime.UtcNow.AddMonths(1),
+                Description = "Guided culinary and cultural walk through historic Al-Muizz Street and Khan el-Khalili, tasting authentic Koshary and oriental sweets.",
+                Category = "drinks",
+                City = "Cairo",
+                Venue = "Al-Muizz Street, Islamic Cairo",
+                Latitude = 30.0514,
+                Longitude = 31.2611,
+            },
+            new() {
+                Title = "Smart Village Cloud Architecture Forum",
+                Date = DateTime.UtcNow.AddMonths(2),
+                Description = "Deep-dive technical conference on microservices, event-driven systems, and Kubernetes deployments for enterprise systems in Egypt.",
+                Category = "culture",
+                City = "Giza",
+                Venue = "Smart Village Convention Center, 6th of October",
+                Latitude = 30.0736,
+                Longitude = 31.0185,
+            },
+            new() {
+                Title = "Dahab Red Sea Hackathon & Diving Retreat",
+                Date = DateTime.UtcNow.AddMonths(3),
+                Description = "A 3-day hackathon and wellness retreat for tech teams in South Sinai, combining intense sprint coding with snorkeling in the Blue Hole.",
+                Category = "travel",
+                City = "Dahab",
+                Venue = "Lighthouse Bay, Dahab, South Sinai",
+                Latitude = 28.5097,
+                Longitude = 34.5136,
+            },
+            new() {
+                Title = "Cairo Opera House Classical Symphony",
+                Date = DateTime.UtcNow.AddMonths(4),
+                Description = "An evening of Arabic and Western classical symphonies performed by the Cairo Symphony Orchestra on Gezira Island.",
+                Category = "music",
+                City = "Cairo",
+                Venue = "Main Hall, Cairo Opera House, Gezira Island",
+                Latitude = 30.0426,
+                Longitude = 31.2241,
             }
         };
 

@@ -1,9 +1,6 @@
-using Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence;
 
-public class AppDbContext(DbContextOptions options) : DbContext(options)
-{
-    public required DbSet<Activity> Activities { get; set; }
-}
+// Kept for backward compatibility with existing EF Core migrations
+public class AppDbContext(DbContextOptions<DevMeetDbContext> options) : DevMeetDbContext(options);
