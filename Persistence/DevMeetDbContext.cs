@@ -1,6 +1,6 @@
 using Domain;
 using Microsoft.EntityFrameworkCore;
-
+ 
 namespace Persistence;
 
 public class DevMeetDbContext(DbContextOptions<DevMeetDbContext> options) : DbContext(options)

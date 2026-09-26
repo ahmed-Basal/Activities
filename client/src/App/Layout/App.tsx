@@ -1,22 +1,35 @@
-import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
-import NavBar from './NavBar';
 import Box from '@mui/material/Box';
+import NavBar from './NavBar';
+import Footer from './Footer';
 import { Outlet, useLocation } from 'react-router';
 import HomePage from '../../Feature/Home/HomePage';
+import { tokens } from '../../theme/theme';
 
 function App() {
   const location = useLocation();
+  const isHome = location.pathname === '/';
 
   return (
-    <Box sx={{ bgcolor: '#eeeeee', minHeight: '100vh' }}>
-      <CssBaseline />
-      {location.pathname === '/' ? <HomePage /> : (
+    <Box
+      sx={{
+        bgcolor: tokens.bg,
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      {isHome ? (
+        <HomePage />
+      ) : (
         <>
           <NavBar />
-          <Container maxWidth='xl' sx={{ mt: 3 }}>
-            <Outlet />
-          </Container>
+          <Box sx={{ flex: 1 }}>
+            <Container maxWidth="xl" sx={{ mt: 3 }}>
+              <Outlet />
+            </Container>
+          </Box>
+          <Footer />
         </>
       )}
     </Box>

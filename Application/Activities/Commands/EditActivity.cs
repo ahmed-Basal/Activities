@@ -12,7 +12,7 @@ public static class EditActivity
         public required Activity Activity { get; set; }
     }
 
-    public class Handler(AppDbContext context, IMapper mapper) : IRequestHandler<Command>
+    public class Handler(DevMeetDbContext context, IMapper mapper) : IRequestHandler<Command>
     {
         public async Task Handle(Command request, CancellationToken cancellationToken)
         {

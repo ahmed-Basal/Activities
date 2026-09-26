@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import { useParams, useNavigate } from 'react-router';
 import useactivites from '../../../lib/Hooks/useactivites';
 import type { Activity } from '../../../lib/Types';
-import { CATEGORY_OPTIONS } from '../../../lib/schemas/activitySchema';
+import { CATEGORY_OPTIONS, LEVEL_OPTIONS } from '../../../lib/schemas/activitySchema';
 
 export default function ActivityForm() {
   const { id } = useParams<{ id: string }>();
@@ -23,10 +23,14 @@ export default function ActivityForm() {
 
     const formData = new FormData(event.currentTarget);
 
-    const data: { [key: string]: FormDataEntryValue } = {};
+    const data: { [key: string]: any } = {};
     formData.forEach((value, key) => {
       data[key] = value;
     });
+
+    if (typeof data.tags === 'string') {
+      data.tags = data.tags.split(',').map((t: string) => t.trim()).filter(Boolean);
+    }
 
     if (activity) {
       data.id = activity.id;
@@ -37,7 +41,6 @@ export default function ActivityForm() {
           onSuccess: (id) => {
             navigate(`/activities/${id}`);
           }
-          
       });
     }
   };
@@ -46,7 +49,7 @@ export default function ActivityForm() {
   return (
     <Paper sx={{ borderRadius: 3, p: 3, boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)' }}>
       <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#1976d2', mb: 2.5 }}>
-        {activity ? 'Edit activity' : 'Create activity'}
+        {activity ? 'Edit Tech Meetup' : 'Create Tech Meetup'}
       </Typography>
 
       <Box
@@ -57,7 +60,7 @@ export default function ActivityForm() {
         <TextField
           name="title"
           label="Title"
-          placeholder="Title"
+          placeholder="e.g. Cairo .NET 9 & Microservices Summit"
           defaultValue={activity?.title ?? ''}
           fullWidth
         />
@@ -65,26 +68,51 @@ export default function ActivityForm() {
         <TextField
           name="description"
           label="Description"
-          placeholder="Description"
+          placeholder="Detailed description of what will be covered..."
           defaultValue={activity?.description ?? ''}
           multiline
           rows={3}
           fullWidth
         />
 
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
+          <TextField
+            select
+            name="category"
+            label="Category"
+            defaultValue={activity?.category ?? 'BackEnd'}
+            fullWidth
+          >
+            {CATEGORY_OPTIONS.map((cat) => (
+              <MenuItem key={cat} value={cat}>
+                {cat}
+              </MenuItem>
+            ))}
+          </TextField>
+
+          <TextField
+            select
+            name="level"
+            label="Experience Level"
+            defaultValue={activity?.level ?? 'All Levels'}
+            fullWidth
+          >
+            {LEVEL_OPTIONS.map((lvl) => (
+              <MenuItem key={lvl} value={lvl}>
+                {lvl}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Box>
+
         <TextField
-          select
-          name="category"
-          label="Category"
-          defaultValue={activity?.category ?? 'drinks'}
+          name="tags"
+          label="Tags / Key Topics (comma-separated)"
+          placeholder="e.g. .NET 9, Microservices, Clean Architecture, PostgreSQL"
+          defaultValue={activity?.tags ? activity.tags.join(', ') : ''}
+          helperText="Topics and technologies to be discussed in the session"
           fullWidth
-        >
-          {CATEGORY_OPTIONS.map((cat) => (
-            <MenuItem key={cat} value={cat}>
-              {cat.charAt(0).toUpperCase() + cat.slice(1)}
-            </MenuItem>
-          ))}
-        </TextField>
+        />
 
         <TextField
           name="date"
@@ -98,7 +126,7 @@ export default function ActivityForm() {
         <TextField
           name="city"
           label="City"
-          placeholder="City"
+          placeholder="e.g. Cairo, Alexandria, Giza, Assiut"
           defaultValue={activity?.city ?? ''}
           fullWidth
         />
@@ -106,7 +134,7 @@ export default function ActivityForm() {
         <TextField
           name="venue"
           label="Venue"
-          placeholder="Venue"
+          placeholder="e.g. The GrEEK Campus, Downtown Cairo"
           defaultValue={activity?.venue ?? ''}
           fullWidth
         />

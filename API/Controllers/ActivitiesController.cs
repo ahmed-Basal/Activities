@@ -1,4 +1,5 @@
 using Application.Activities.Commands;
+using Application.Activities.DTO;
 using Application.Activities.Queries;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -24,9 +25,9 @@ public class ActivitiesController : BaseApiController
     }
 
     [HttpPost]
-    public async Task<ActionResult<string>> CreateActivity(Activity activity, CancellationToken ct)
+    public async Task<ActionResult<string>> CreateActivity(CreateActivityDto activity, CancellationToken ct)
     {
-        return await Mediator.Send(new CreateActivity.Command { Activity = activity }, ct);
+        return await Mediator.Send(new CreateActivity.Command { ActivityDto = activity }, ct);
     }
 
     [HttpPut("{id}")]

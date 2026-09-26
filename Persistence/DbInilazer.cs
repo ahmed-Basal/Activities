@@ -6,8 +6,8 @@ public static class DbInitializer
 {
     public static async Task SeedData(DevMeetDbContext context)
     {
-        // If old sample data from London/Paris exists, replace it with Egyptian data
-        if (context.Activities.Any(a => a.City == "London" || a.City == "Paris"))
+        // Automatically replace old non-tech categories or sample cities
+        if (context.Activities.Any(a => a.Category == "culture" || a.Category == "drinks" || a.Category == "music" || a.City == "London"))
         {
             context.Activities.RemoveRange(context.Activities);
             await context.SaveChangesAsync();
@@ -18,94 +18,112 @@ public static class DbInitializer
         var activities = new List<Activity>
         {
             new() {
-                Title = "Cairo .NET & React Summit",
+                Title = "Cairo .NET 9 & Distributed Systems Masterclass",
                 Date = DateTime.UtcNow.AddMonths(-1),
-                Description = "Annual gathering of Egyptian software engineers at The Greek Campus discussing .NET 9, Cloud-Native architecture, and React 19 performance.",
-                Category = "culture",
+                Description = "Deep-dive technical workshop for senior Egyptian backend engineers at The Greek Campus exploring .NET 9 performance, Clean Architecture, CQRS, and Event-Driven microservices.",
+                Category = "BackEnd",
                 City = "Cairo",
                 Venue = "The Greek Campus, Downtown Cairo",
                 Latitude = 30.0444,
                 Longitude = 31.2357,
+                Level = "Advanced",
+                Tags = [".NET 9", "PostgreSQL", "Clean Architecture", "Redis", "Microservices"]
             },
             new() {
-                Title = "Alexandria Coastal Tech Talk",
-                Date = DateTime.UtcNow.AddDays(-12),
-                Description = "Weekend developer meetup by the Mediterranean Sea discussing AI integration and web engineering at the Library of Alexandria.",
-                Category = "travel",
+                Title = "Red Team & Web Penetration Testing Workshop",
+                Date = DateTime.UtcNow.AddDays(-14),
+                Description = "Hands-on offensive security lab covering modern web vulnerabilities, automated recon, and exploiting misconfigurations in production environments.",
+                Category = "CyberSecurity",
+                City = "Giza",
+                Venue = "Smart Village ITIDA Tech Hub, 6th of October",
+                Latitude = 30.0736,
+                Longitude = 31.0185,
+                Level = "Intermediate",
+                Tags = ["OWASP Top 10", "Ethical Hacking", "Burp Suite", "API Security", "Penetration Testing"]
+            },
+            new() {
+                Title = "Modern React 19 & Next.js Performance Camp",
+                Date = DateTime.UtcNow.AddDays(4),
+                Description = "Full-day frontend conference by the Mediterranean Sea discussing React 19 Server Components, compiler optimization, and building accessible UI design systems.",
+                Category = "FrontEnd",
                 City = "Alexandria",
                 Venue = "Bibliotheca Alexandrina Conference Hall, Al Shatby",
                 Latitude = 31.2089,
                 Longitude = 29.9092,
+                Level = "Intermediate",
+                Tags = ["React 19", "Next.js", "TypeScript", "TailwindCSS", "State Management"]
             },
             new() {
-                Title = "Maadi Specialty Coffee & Code",
-                Date = DateTime.UtcNow.AddDays(3),
-                Description = "Casual Saturday morning coffee session on Road 9 for developers to review open-source projects, network, and exchange career tips.",
-                Category = "drinks",
+                Title = "Big Data & Business Intelligence with Power BI & SQL",
+                Date = DateTime.UtcNow.AddDays(11),
+                Description = "Learn how Egyptian fintech and telecom companies extract business insights using SQL warehousing, statistical modeling, and interactive Power BI dashboards.",
+                Category = "DataAnalysis",
                 City = "Cairo",
-                Venue = "Road 9 Specialty Cafe, Maadi",
-                Latitude = 29.9585,
-                Longitude = 31.2778,
+                Venue = "Nile City Towers, Corniche El Nil, Bulaq",
+                Latitude = 30.0719,
+                Longitude = 31.2291,
+                Level = "Beginner",
+                Tags = ["Power BI", "SQL", "Python", "Pandas", "Data Cleaning"]
             },
             new() {
-                Title = "Giza Pyramids Sound & Light Cultural Evening",
-                Date = DateTime.UtcNow.AddDays(10),
-                Description = "Night gathering exploring ancient Egyptian civilization and history through the iconic Sound and Light performance at the Pyramids Plateau.",
-                Category = "culture",
-                City = "Giza",
-                Venue = "Pyramids Plateau, Giza",
-                Latitude = 29.9792,
-                Longitude = 31.1342,
-            },
-            new() {
-                Title = "Zamalek Indie Film Screening",
-                Date = DateTime.UtcNow.AddDays(18),
-                Description = "Screening of award-winning contemporary Egyptian short movies followed by an open panel discussion with independent filmmakers.",
-                Category = "film",
+                Title = "Kubernetes & Cloud Infrastructure Boot Camp",
+                Date = DateTime.UtcNow.AddDays(20),
+                Description = "Intensive workshop on production Kubernetes deployments, zero-downtime rolling upgrades, GitOps pipelines, and monitoring with Prometheus and Grafana.",
+                Category = "DevOps",
                 City = "Cairo",
-                Venue = "Zawya Cinema, Downtown / Zamalek Arts Center",
-                Latitude = 30.0617,
-                Longitude = 31.2198,
+                Venue = "Maadi Tech Park, Investment Zone, Maadi",
+                Latitude = 29.9602,
+                Longitude = 31.2915,
+                Level = "Advanced",
+                Tags = ["Docker", "Kubernetes", "CI/CD", "Terraform", "GitHub Actions"]
             },
             new() {
-                Title = "Old Cairo Street Food & Heritage Walk",
+                Title = "Secure Cloud Identity & OAuth2 Deep Dive",
                 Date = DateTime.UtcNow.AddMonths(1),
-                Description = "Guided culinary and cultural walk through historic Al-Muizz Street and Khan el-Khalili, tasting authentic Koshary and oriental sweets.",
-                Category = "drinks",
-                City = "Cairo",
-                Venue = "Al-Muizz Street, Islamic Cairo",
-                Latitude = 30.0514,
-                Longitude = 31.2611,
+                Description = "A technical session on securing modern APIs, JWT authentication lifecycles, OAuth2 authorization grants, and Zero Trust security architectures.",
+                Category = "CyberSecurity",
+                City = "New Cairo",
+                Venue = "American University in Cairo (AUC), New Cairo Campus",
+                Latitude = 30.0194,
+                Longitude = 31.4998,
+                Level = "Advanced",
+                Tags = ["OAuth 2.0", "OpenID Connect", "JWT", "Zero Trust", "Cloud Security"]
             },
             new() {
-                Title = "Smart Village Cloud Architecture Forum",
+                Title = "Frontend Architecture & Design Systems Meetup",
+                Date = DateTime.UtcNow.AddMonths(1).AddDays(10),
+                Description = "Practical discussions for junior and mid-level web developers on turning complex Figma designs into reusable React components with Material UI.",
+                Category = "FrontEnd",
+                City = "Cairo",
+                Venue = "District Workspace, Sheraton Heliopolis",
+                Latitude = 30.0982,
+                Longitude = 31.3644,
+                Level = "Beginner",
+                Tags = ["UI/UX", "Material-UI", "Figma to Code", "Component Architecture"]
+            },
+            new() {
+                Title = "Python for Machine Learning & Predictive Analytics",
                 Date = DateTime.UtcNow.AddMonths(2),
-                Description = "Deep-dive technical conference on microservices, event-driven systems, and Kubernetes deployments for enterprise systems in Egypt.",
-                Category = "culture",
-                City = "Giza",
-                Venue = "Smart Village Convention Center, 6th of October",
-                Latitude = 30.0736,
-                Longitude = 31.0185,
+                Description = "Explore machine learning algorithms, training predictive models on real-world datasets, and evaluating model metrics with Python and Scikit-Learn.",
+                Category = "DataAnalysis",
+                City = "Mansoura",
+                Venue = "Mansoura University IT Center, Mansoura",
+                Latitude = 31.0425,
+                Longitude = 31.3553,
+                Level = "Intermediate",
+                Tags = ["Machine Learning", "Scikit-Learn", "Data Visualization", "Jupyter"]
             },
             new() {
-                Title = "Dahab Red Sea Hackathon & Diving Retreat",
+                Title = "Containerization & Microservices with Docker & Linux",
                 Date = DateTime.UtcNow.AddMonths(3),
-                Description = "A 3-day hackathon and wellness retreat for tech teams in South Sinai, combining intense sprint coding with snorkeling in the Blue Hole.",
-                Category = "travel",
-                City = "Dahab",
-                Venue = "Lighthouse Bay, Dahab, South Sinai",
-                Latitude = 28.5097,
-                Longitude = 34.5136,
-            },
-            new() {
-                Title = "Cairo Opera House Classical Symphony",
-                Date = DateTime.UtcNow.AddMonths(4),
-                Description = "An evening of Arabic and Western classical symphonies performed by the Cairo Symphony Orchestra on Gezira Island.",
-                Category = "music",
-                City = "Cairo",
-                Venue = "Main Hall, Cairo Opera House, Gezira Island",
-                Latitude = 30.0426,
-                Longitude = 31.2241,
+                Description = "Beginner-friendly hands-on lab on packaging backend applications into Docker containers, writing multi-stage Dockerfiles, and deploying to Linux servers.",
+                Category = "DevOps",
+                City = "Assiut",
+                Venue = "Assiut Innovation & Tech Park, Assiut",
+                Latitude = 27.1809,
+                Longitude = 31.1837,
+                Level = "Beginner",
+                Tags = ["Docker", "Linux", "Bash Scripting", "Nginx", "DevOps Fundamentals"]
             }
         };
 
