@@ -1,6 +1,7 @@
 using Application.Activities.DTO;
 using AutoMapper;
 using Domain;
+using FluentValidation;
 using MediatR;
 using Persistence;
 
@@ -13,12 +14,12 @@ public static class CreateActivity
         public required CreateActivityDto ActivityDto { get; set; }
     }
 
-    public class Handler(DevMeetDbContext context, IMapper mapper,Ivalidator<Command> validator) : IRequestHandler<Command, string>
+    public class Handler(DevMeetDbContext context, IMapper mapper, IValidator<CreateActivityDto> validator) : IRequestHandler<Command, string>
     {
         public async Task<string> Handle(Command request, CancellationToken cancellationToken)
         {
-            var result = await validator.ValidateAsync(request);
-            if(!result.IsValid)
+            var result = await validator.ValidateAsync(request.ActivityDto, cancellationToken);
+            if (!result.IsValid)
             {
                 throw new ValidationException(result.Errors);
             }

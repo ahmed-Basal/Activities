@@ -1,7 +1,9 @@
 using API.Options;
 using Application.Activities.Queries;
+using Application.Activities.Validators;
 using Application.Core;
 using AutoMapper;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Persistence;
@@ -24,6 +26,9 @@ public static class ApplicationServiceExtensions
             cfg.RegisterServicesFromAssembly(typeof(GetActivityList.Handler).Assembly);
             cfg.LicenseKey = config["MediatR:LicenseKey"];
         });
+
+        // Register FluentValidation
+        services.AddValidatorsFromAssemblyContaining<CreateActivityvalidator>();
 
         // Options Pattern: Bind and validate ConnectionStrings configuration
         services.AddOptions<DatabaseOptions>()
